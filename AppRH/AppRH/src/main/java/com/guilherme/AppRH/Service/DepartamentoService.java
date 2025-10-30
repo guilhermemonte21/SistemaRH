@@ -20,27 +20,27 @@ public class DepartamentoService {
         this.departamentoRepository = departamentoRepository;
     }
 
-    //Cadastrar
+
     public Departamento CadastrarDepartamento(String nome){
         Departamento novoDepartamento = new Departamento();
         novoDepartamento.setDepartamentoNome(nome);
 
         return departamentoRepository.save(novoDepartamento);
     }
-    //Buscar Por Id
+
     public Departamento BuscarDepartamentoPorId(Integer id){
 
         return departamentoRepository.findById(id)
                 .orElseThrow(() -> new NoSuchElementException("Departamento não encontrado com o ID: " + id));
 
     }
-    //Deletar
+
     public void DeletarDepartamento(Integer id){
 
         departamentoRepository.deleteById(id);
 
     }
-    //Listar
+
     public List<Colaborador> ListarColaboradores(Integer  ID){
        Departamento dpto =  departamentoRepository.findById(ID)
                .orElseThrow(() -> new NoSuchElementException("Departamento não encontrado com o ID: " + ID));
