@@ -1,5 +1,6 @@
 package com.guilherme.AppRH.Repository;
 
+import com.guilherme.AppRH.Model.DTO.ColaboradorDTO;
 import com.guilherme.AppRH.Model.Entity.Colaborador;
 import org.springframework.data.jpa.repository.JpaRepository;
 

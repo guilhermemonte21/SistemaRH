@@ -1,5 +1,6 @@
 package com.guilherme.AppRH.Service;
 
+import com.guilherme.AppRH.Model.DTO.ColaboradorDTO;
 import com.guilherme.AppRH.Model.Entity.Colaborador;
 import com.guilherme.AppRH.Repository.ColaboradorRepository;
 import org.springframework.stereotype.Service;
@@ -21,8 +22,15 @@ public class ColaboradorService {
     public Colaborador BuscarPorId(UUID id){
         return colaboradorRepository.findById(id).orElse(null);
     }
-    public void Atualizar(Colaborador colaborador){
-        colaboradorRepository.save(colaborador);
+    public Colaborador Atualizar(ColaboradorDTO colaborador){
+
+        Colaborador col = new Colaborador();
+        col.setColaboradorNome(colaborador.getColaboradorNome());
+        col.setColaboradorCPF(colaborador.getColaboradorCPF());
+        col.setColaboradorEmail(colaborador.getColaboradorEmail());
+        col.setColaboradorTelefone(colaborador.getColaboradorTelefone());
+
+        return colaboradorRepository.save(col);
     }
 
     public void Deletar(UUID Id){
