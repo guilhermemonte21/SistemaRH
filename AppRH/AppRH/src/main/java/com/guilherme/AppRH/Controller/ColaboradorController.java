@@ -41,11 +41,11 @@ public class ColaboradorController {
         }
     }
 
-    //recursao infinita
+    //funciona
     @PutMapping("/atualizar")
-    public Colaborador atualizar(@RequestBody Colaborador colaborador) {
+    public Colaborador atualizar(@RequestBody ColaboradorDTO colaborador) {
         try {
-            return this.service.Cadastrar(colaborador);
+            return this.service.Atualizar(colaborador);
 
         } catch (IllegalArgumentException e) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, e.getMessage());
