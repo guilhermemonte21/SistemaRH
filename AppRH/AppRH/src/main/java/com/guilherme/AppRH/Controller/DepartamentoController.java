@@ -21,41 +21,43 @@ public class DepartamentoController {
         this.service = service;
     }
 
-
+    //funciona
     @PostMapping
     public Departamento cadastrar(@RequestBody Departamento departamento) {
         try {
-            return service.CadastrarDepartamento(departamento.getDepartamentoNome());
+            return this.service.CadastrarDepartamento(departamento.getDepartamentoNome());
         } catch (IllegalArgumentException e) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, e.getMessage());
         }
     }
 
-
+    //funciona
     @GetMapping("/{id}")
-    public Departamento buscarPorId(@PathVariable Integer id) {
+    public Departamento buscarPorId(@PathVariable("id") Integer id) {
         try {
-            return service.BuscarDepartamentoPorId(id);
+            return this.service.BuscarDepartamentoPorId(id);
+
         } catch (IllegalArgumentException e) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, e.getMessage());
         }
     }
 
-
+    //funciona
     @DeleteMapping("/{id}")
     public void deletar(@PathVariable Integer id) {
         try {
-            service.DeletarDepartamento(id);
+            this.service.DeletarDepartamento(id);
         } catch (IllegalArgumentException e) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, e.getMessage());
         }
     }
 
-
+    //funciona/recursao
     @GetMapping("/{id}/colaboradores")
-    public List<Colaborador> listarColaboradores(@PathVariable Integer id) {
+    public List<Colaborador> listarColaboradores(@PathVariable("id") Integer id) {
         try {
-            return service.ListarColaboradores(id);
+            return this.service.ListarColaboradores(id);
+
         } catch (IllegalArgumentException e) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, e.getMessage());
         }

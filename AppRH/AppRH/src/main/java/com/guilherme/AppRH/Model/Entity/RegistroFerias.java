@@ -7,21 +7,28 @@ import java.time.LocalDate;
 import java.util.UUID;
 
 @Entity
+@Table(name = "registroFerias")
 public class RegistroFerias {
     @Id
+    @Column(name = "FeriasId")
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private Integer FeriasId;
 
     @OneToOne
+    @PrimaryKeyJoinColumn(name = "Colaborador")
     private Colaborador Colaborador;
 
+    @Column(name = "FeriasDataInicio")
     private LocalDate FeriasDataInicio;
 
+    @Column(name = "FeriasDataFim")
     private LocalDate FeriasDataFim;
 
+    @Column(name = "FeriasDuracaoDias")
     private int FeriasDuracaoDias;
 
     @Enumerated(EnumType.STRING)
+    @Column(name = "FeriasStatus")
     private StatusFerias FeriasStatus;
 
     public Integer getFeriasId() {

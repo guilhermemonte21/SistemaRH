@@ -6,24 +6,32 @@ import java.time.LocalDate;
 import java.util.UUID;
 
 @Entity
+@Table(name = "colaborador")
 public class Colaborador {
     @Id
+    @Column(name = "ColaboradorId")
     @GeneratedValue(strategy = GenerationType.UUID)
     private UUID ColaboradorId;
 
+    @Column(name = "ColaboradorNome")
     private String ColaboradorNome;
 
+    @Column(name = "ColaboradorCpf")
     private String ColaboradorCPF;
 
+    @Column(name = "ColaboradorDataNascimento")
     private LocalDate ColaboradorDataNascimento;
 
+    @Column(name = "ColaboradorEmail")
     private String ColaboradorEmail;
 
-    private Integer ColaboradorTelefone;
+    @Column(name = "ColaboradorTelefone")
+    private Long ColaboradorTelefone;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "departamento_id")
     private Departamento departamento;
+
 
     public UUID getColaboradorId() {
         return ColaboradorId;
@@ -65,11 +73,11 @@ public class Colaborador {
         ColaboradorEmail = colaboradorEmail;
     }
 
-    public Integer getColaboradorTelefone() {
+    public Long getColaboradorTelefone() {
         return ColaboradorTelefone;
     }
 
-    public void setColaboradorTelefone(Integer colaboradorTelefone) {
+    public void setColaboradorTelefone(Long colaboradorTelefone) {
         ColaboradorTelefone = colaboradorTelefone;
     }
 

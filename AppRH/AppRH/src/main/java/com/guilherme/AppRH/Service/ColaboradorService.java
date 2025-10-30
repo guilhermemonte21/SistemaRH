@@ -25,7 +25,7 @@ public class ColaboradorService {
         colaboradorRepository.save(colaborador);
     }
 
-    public void Deletar(Colaborador colaborador){
-        colaboradorRepository.delete(colaborador);
+    public void Deletar(UUID Id){
+        colaboradorRepository.deleteById(Id);
     }
 }

@@ -1,5 +1,6 @@
 package com.guilherme.AppRH.Controller;
 
+import com.guilherme.AppRH.Model.DTO.ColaboradorDTO;
 import com.guilherme.AppRH.Model.Entity.Colaborador;
 import com.guilherme.AppRH.Service.ColaboradorService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,7 +20,7 @@ public class ColaboradorController {
         this.service = service;
     }
 
-
+    //funciona
     @PostMapping("/post")
     public Colaborador salvar(@RequestBody Colaborador col) {
         try {
@@ -29,31 +30,34 @@ public class ColaboradorController {
         }
     }
 
-
+    //funciona
     @GetMapping("/{id}")
-    public Colaborador buscarPorId(@PathVariable UUID id) {
+    public Colaborador buscarPorId(@PathVariable("id") UUID id) {
         try {
-            return this.service.BuscarPorId(id);
+           Colaborador col = service.BuscarPorId(id);
+           return col;
         } catch (IllegalArgumentException e) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, e.getMessage());
         }
     }
 
-
+    //recursao infinita
     @PutMapping("/atualizar")
     public Colaborador atualizar(@RequestBody Colaborador colaborador) {
         try {
             return this.service.Cadastrar(colaborador);
+
         } catch (IllegalArgumentException e) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, e.getMessage());
         }
     }
 
 
-    @DeleteMapping("/delete")
-    public void deletar(@RequestBody Colaborador col) {
+    //funciona
+    @DeleteMapping("/delete/{id}")
+    public void deletar(@PathVariable("id") UUID Id) {
         try {
-            this.service.Deletar(col);
+            this.service.Deletar(Id);
         } catch (IllegalArgumentException e) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, e.getMessage());
         }

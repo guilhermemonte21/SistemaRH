@@ -16,7 +16,11 @@ public class RegistroFeriasService {
     private RegistroFeriasRepository registroFeriasRepository;
 
     public RegistroFerias CadastrarFerias(RegistroFerias reg){
-        return registroFeriasRepository.save(reg);
+        if(reg.getFeriasDataFim().isAfter(reg.getFeriasDataInicio())){
+        return registroFeriasRepository.save(reg);}
+        else {
+           return null;
+        }
     }
 
     public RegistroFerias BuscarFeriasById (Integer id){

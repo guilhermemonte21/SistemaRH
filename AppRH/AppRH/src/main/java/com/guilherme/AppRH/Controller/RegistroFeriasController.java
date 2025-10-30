@@ -22,7 +22,7 @@ public class RegistroFeriasController {
     @PostMapping
     public RegistroFerias cadastrar(@RequestBody RegistroFerias reg) {
         try {
-            return registroFeriasService.CadastrarFerias(reg);
+            return this.registroFeriasService.CadastrarFerias(reg);
         } catch (IllegalArgumentException e) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, e.getMessage());
         }
@@ -32,7 +32,7 @@ public class RegistroFeriasController {
     @GetMapping("/{id}")
     public RegistroFerias buscarPorId(@PathVariable Integer id) {
         try {
-            return registroFeriasService.BuscarFeriasById(id);
+            return this.registroFeriasService.BuscarFeriasById(id);
         } catch (IllegalArgumentException e) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, e.getMessage());
         }
@@ -42,7 +42,7 @@ public class RegistroFeriasController {
     @DeleteMapping("/{id}")
     public void deletar(@PathVariable Integer id) {
         try {
-            registroFeriasService.DeletarRegistroFeriasById(id);
+            this.registroFeriasService.DeletarRegistroFeriasById(id);
         } catch (IllegalArgumentException e) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, e.getMessage());
         }
@@ -52,7 +52,7 @@ public class RegistroFeriasController {
     @GetMapping
     public List<RegistroFerias> listarTodos() {
         try {
-            return registroFeriasService.ListarRegistros();
+            return this.registroFeriasService.ListarRegistros();
         } catch (IllegalArgumentException e) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, e.getMessage());
         }
