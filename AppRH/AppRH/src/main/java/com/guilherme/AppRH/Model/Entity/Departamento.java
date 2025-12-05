@@ -19,7 +19,7 @@ public class Departamento {
 
     @Column(name = "ListaColaboradores")
     @OneToMany(mappedBy = "departamento", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    private List<Colaborador> colaboradorList = new ArrayList<>();
+    private List<Colaborador> colaboradorList = new ArrayList<Colaborador>();
 
     public Integer getDepartamentoId() {
         return DepartamentoId;

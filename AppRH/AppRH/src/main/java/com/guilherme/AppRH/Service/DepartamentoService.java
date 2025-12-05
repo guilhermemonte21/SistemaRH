@@ -1,5 +1,8 @@
 package com.guilherme.AppRH.Service;
 
+import com.guilherme.AppRH.Model.DTO.ColaboradorDTO;
+import com.guilherme.AppRH.Model.DTO.ColaboradorDtoResponse;
+import com.guilherme.AppRH.Model.DTO.DepartamentoDto;
 import com.guilherme.AppRH.Model.Entity.Colaborador;
 import com.guilherme.AppRH.Model.Entity.Departamento;
 import com.guilherme.AppRH.Repository.DepartamentoRepository;
@@ -9,6 +12,7 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 @Service
 public class DepartamentoService {
@@ -28,10 +32,15 @@ public class DepartamentoService {
         return departamentoRepository.save(novoDepartamento);
     }
 
-    public Departamento BuscarDepartamentoPorId(Integer id){
+    public DepartamentoDto BuscarDepartamentoPorId(Integer id){
 
-        return departamentoRepository.findById(id)
+        Departamento dpto =  departamentoRepository.findById(id)
                 .orElseThrow(() -> new NoSuchElementException("Departamento não encontrado com o ID: " + id));
+
+        DepartamentoDto dp = new DepartamentoDto();
+        dp.setId(dpto.getDepartamentoId());
+        dp.setNome(dpto.getDepartamentoNome());
+        return dp;
 
     }
 
@@ -41,10 +50,19 @@ public class DepartamentoService {
 
     }
 
-    public List<Colaborador> ListarColaboradores(Integer  ID){
+    public List<ColaboradorDtoResponse> ListarColaboradores(Integer  ID){
        Departamento dpto =  departamentoRepository.findById(ID)
                .orElseThrow(() -> new NoSuchElementException("Departamento não encontrado com o ID: " + ID));
+       return dpto.getColaboradorList().stream().map(c ->
+       {
+           ColaboradorDtoResponse dto = new ColaboradorDtoResponse();
+           dto.setColaboradorId(c.getColaboradorId());
+           dto.setColaboradorNome(c.getColaboradorNome());
+           dto.setColaboradorEmail(c.getColaboradorEmail());
+           dto.setColaboradorTelefone(c.getColaboradorTelefone());
+           return dto;
+       }).collect(Collectors.toList());
 
-        return dpto.getColaboradorList();
+
     }
 }

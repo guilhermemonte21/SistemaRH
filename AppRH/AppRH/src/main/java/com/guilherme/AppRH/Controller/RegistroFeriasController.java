@@ -1,5 +1,6 @@
 package com.guilherme.AppRH.Controller;
 
+import com.guilherme.AppRH.Model.DTO.FeriasDTO;
 import com.guilherme.AppRH.Model.Entity.RegistroFerias;
 import com.guilherme.AppRH.Service.RegistroFeriasService;
 import org.springframework.http.HttpStatus;
@@ -20,7 +21,7 @@ public class RegistroFeriasController {
 
 
     @PostMapping
-    public RegistroFerias cadastrar(@RequestBody RegistroFerias reg) {
+    public RegistroFerias cadastrar(@RequestBody FeriasDTO reg) {
         try {
             return this.registroFeriasService.CadastrarFerias(reg);
         } catch (IllegalArgumentException e) {

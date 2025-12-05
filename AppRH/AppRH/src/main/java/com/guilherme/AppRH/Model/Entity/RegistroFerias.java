@@ -1,8 +1,8 @@
 package com.guilherme.AppRH.Model.Entity;
 
+import com.guilherme.AppRH.Model.DTO.ColaboradorDTO;
 import com.guilherme.AppRH.Model.Enum.StatusFerias;
 import jakarta.persistence.*;
-
 import java.time.LocalDate;
 import java.util.UUID;
 
@@ -15,7 +15,7 @@ public class RegistroFerias {
     private Integer FeriasId;
 
     @OneToOne
-    @PrimaryKeyJoinColumn(name = "Colaborador")
+    @JoinColumn(name = "Colaborador")
     private Colaborador Colaborador;
 
     @Column(name = "FeriasDataInicio")
@@ -25,7 +25,7 @@ public class RegistroFerias {
     private LocalDate FeriasDataFim;
 
     @Column(name = "FeriasDuracaoDias")
-    private int FeriasDuracaoDias;
+    private Long FeriasDuracaoDias;
 
     @Enumerated(EnumType.STRING)
     @Column(name = "FeriasStatus")
@@ -63,11 +63,11 @@ public class RegistroFerias {
         FeriasDataFim = feriasDataFim;
     }
 
-    public int getFeriasDuracaoDias() {
+    public Long getFeriasDuracaoDias() {
         return FeriasDuracaoDias;
     }
 
-    public void setFeriasDuracaoDias(int feriasDuracaoDias) {
+    public void setFeriasDuracaoDias(Long feriasDuracaoDias) {
         FeriasDuracaoDias = feriasDuracaoDias;
     }
 

@@ -1,10 +1,13 @@
 package com.guilherme.AppRH.Controller;
 
+import com.guilherme.AppRH.Model.DTO.ColaboradorDtoResponse;
+import com.guilherme.AppRH.Model.DTO.DepartamentoDto;
 import com.guilherme.AppRH.Model.Entity.Colaborador;
 import com.guilherme.AppRH.Model.Entity.Departamento;
 import com.guilherme.AppRH.Service.DepartamentoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
@@ -23,9 +26,10 @@ public class DepartamentoController {
 
     //funciona
     @PostMapping
-    public Departamento cadastrar(@RequestBody Departamento departamento) {
+    public ResponseEntity<Departamento> cadastrar(@RequestBody Departamento departamento) {
         try {
-            return this.service.CadastrarDepartamento(departamento.getDepartamentoNome());
+            Departamento dp = this.service.CadastrarDepartamento(departamento.getDepartamentoNome());
+            return ResponseEntity.status(HttpStatus.CREATED).body(dp);
         } catch (IllegalArgumentException e) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, e.getMessage());
         }
@@ -33,9 +37,10 @@ public class DepartamentoController {
 
     //funciona
     @GetMapping("/{id}")
-    public Departamento buscarPorId(@PathVariable("id") Integer id) {
+    public ResponseEntity<DepartamentoDto> buscarPorId(@PathVariable("id") Integer id) {
         try {
-            return this.service.BuscarDepartamentoPorId(id);
+            DepartamentoDto dto = this.service.BuscarDepartamentoPorId(id);
+            return ResponseEntity.status(HttpStatus.FOUND).body(dto);
 
         } catch (IllegalArgumentException e) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, e.getMessage());
@@ -44,19 +49,21 @@ public class DepartamentoController {
 
     //funciona
     @DeleteMapping("/{id}")
-    public void deletar(@PathVariable Integer id) {
+    public ResponseEntity<Void> deletar(@PathVariable Integer id) {
         try {
             this.service.DeletarDepartamento(id);
+            return ResponseEntity.ok().build();
         } catch (IllegalArgumentException e) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, e.getMessage());
         }
     }
 
-    //funciona/recursao
+    //funciona
     @GetMapping("/{id}/colaboradores")
-    public List<Colaborador> listarColaboradores(@PathVariable("id") Integer id) {
+    public ResponseEntity<List<ColaboradorDtoResponse>> listarColaboradores(@PathVariable("id") Integer id) {
         try {
-            return this.service.ListarColaboradores(id);
+            List<ColaboradorDtoResponse> ListaColaboradores = this.service.ListarColaboradores(id);
+            return ResponseEntity.status(HttpStatus.FOUND).body(ListaColaboradores);
 
         } catch (IllegalArgumentException e) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, e.getMessage());

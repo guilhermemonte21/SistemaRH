@@ -1,36 +1,59 @@
 package com.guilherme.AppRH.Service;
 
 import com.guilherme.AppRH.Model.DTO.ColaboradorDTO;
+import com.guilherme.AppRH.Model.DTO.ColaboradorDtoResponse;
+import com.guilherme.AppRH.Model.DTO.DepartamentoDto;
 import com.guilherme.AppRH.Model.Entity.Colaborador;
+import com.guilherme.AppRH.Model.Entity.Departamento;
 import com.guilherme.AppRH.Repository.ColaboradorRepository;
+import com.guilherme.AppRH.Repository.DepartamentoRepository;
 import org.springframework.stereotype.Service;
 
+import java.util.NoSuchElementException;
 import java.util.UUID;
 
 @Service
 public class ColaboradorService {
     private ColaboradorRepository colaboradorRepository;
+    private DepartamentoRepository departamentoRepository;
 
-    public ColaboradorService(ColaboradorRepository colaboradorRepository) {
+    public ColaboradorService(ColaboradorRepository colaboradorRepository, DepartamentoRepository departamentoRepository) {
         this.colaboradorRepository = colaboradorRepository;
+        this.departamentoRepository = departamentoRepository;
     }
 
     public Colaborador Cadastrar(Colaborador colaborador){
         return colaboradorRepository.save(colaborador);
     }
 
-    public Colaborador BuscarPorId(UUID id){
-        return colaboradorRepository.findById(id).orElse(null);
-    }
-    public Colaborador Atualizar(ColaboradorDTO colaborador){
+    public ColaboradorDtoResponse BuscarPorId(UUID id){
+        Colaborador col = colaboradorRepository.findById(id).orElseThrow(() -> new NoSuchElementException("Departamento não encontrado com o ID: " + id));
+        ColaboradorDtoResponse c = new ColaboradorDtoResponse();
+        c.setColaboradorId(col.getColaboradorId());
+        c.setColaboradorNome(col.getColaboradorNome());
+        c.setColaboradorTelefone(col.getColaboradorTelefone());
+        c.setColaboradorEmail(col.getColaboradorEmail());
 
-        Colaborador col = new Colaborador();
+        return c;
+    }
+    public void Atualizar(ColaboradorDTO colaborador, UUID id){
+
+        Colaborador col = colaboradorRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("Colaborador não encontrado"));
+
+
         col.setColaboradorNome(colaborador.getColaboradorNome());
-        col.setColaboradorCPF(colaborador.getColaboradorCPF());
         col.setColaboradorEmail(colaborador.getColaboradorEmail());
         col.setColaboradorTelefone(colaborador.getColaboradorTelefone());
 
-        return colaboradorRepository.save(col);
+        Departamento DepartamentoById = this.departamentoRepository.findById(colaborador.getDepartamentoId())
+                .orElse(null);
+
+
+        col.setDepartamento(DepartamentoById);
+
+
+        colaboradorRepository.save(col);
+
     }
 
     public void Deletar(UUID Id){
