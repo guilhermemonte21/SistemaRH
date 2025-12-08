@@ -4,6 +4,7 @@ import com.guilherme.AppRH.Model.DTO.FeriasDTO;
 import com.guilherme.AppRH.Model.Entity.RegistroFerias;
 import com.guilherme.AppRH.Service.RegistroFeriasService;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
@@ -21,9 +22,10 @@ public class RegistroFeriasController {
 
 
     @PostMapping
-    public RegistroFerias cadastrar(@RequestBody FeriasDTO reg) {
+    public ResponseEntity<FeriasDTO> cadastrar(@RequestBody FeriasDTO reg) {
         try {
-            return this.registroFeriasService.CadastrarFerias(reg);
+            FeriasDTO RegistroFerias = this.registroFeriasService.CadastrarFerias(reg);
+            return ResponseEntity.status(HttpStatus.CREATED).body(RegistroFerias);
         } catch (IllegalArgumentException e) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, e.getMessage());
         }
@@ -31,9 +33,10 @@ public class RegistroFeriasController {
 
 
     @GetMapping("/{id}")
-    public RegistroFerias buscarPorId(@PathVariable Integer id) {
+    public ResponseEntity<FeriasDTO> buscarPorId(@PathVariable Integer id) {
         try {
-            return this.registroFeriasService.BuscarFeriasById(id);
+            FeriasDTO FeriasById = this.registroFeriasService.BuscarFeriasById(id);
+            return ResponseEntity.ok().body(FeriasById);
         } catch (IllegalArgumentException e) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, e.getMessage());
         }
@@ -41,21 +44,17 @@ public class RegistroFeriasController {
 
 
     @DeleteMapping("/{id}")
-    public void deletar(@PathVariable Integer id) {
+    public ResponseEntity<Void> deletar(@PathVariable Integer id) {
         try {
             this.registroFeriasService.DeletarRegistroFeriasById(id);
+            return ResponseEntity.ok().build();
         } catch (IllegalArgumentException e) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, e.getMessage());
         }
     }
-
-
     @GetMapping
-    public List<RegistroFerias> listarTodos() {
-        try {
-            return this.registroFeriasService.ListarRegistros();
-        } catch (IllegalArgumentException e) {
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, e.getMessage());
-        }
+    public List<FeriasDTO> ListaDeRegistros(){
+        return this.registroFeriasService.ListarRegistros();
     }
+
 }

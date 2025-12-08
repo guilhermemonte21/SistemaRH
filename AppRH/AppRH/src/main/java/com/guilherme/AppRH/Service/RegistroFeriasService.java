@@ -1,5 +1,8 @@
 package com.guilherme.AppRH.Service;
 
+import com.guilherme.AppRH.Mappers.ColaboradorMapper;
+import com.guilherme.AppRH.Mappers.FeriasMapper;
+import com.guilherme.AppRH.Model.DTO.ColaboradorDTO;
 import com.guilherme.AppRH.Model.DTO.FeriasDTO;
 import com.guilherme.AppRH.Model.Entity.Colaborador;
 import com.guilherme.AppRH.Model.Entity.RegistroFerias;
@@ -11,28 +14,30 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 @Service
 public class RegistroFeriasService {
 
-    @Autowired
+
     private RegistroFeriasRepository registroFeriasRepository;
 
-    @Autowired
-    private ColaboradorRepository colaboradorRepository;
+    private  FeriasMapper feriasMapper;
 
-    public RegistroFerias CadastrarFerias(FeriasDTO reg){
+
+    public RegistroFeriasService(FeriasMapper feriasMapper, RegistroFeriasRepository registroFeriasRepository ) {
+        this.feriasMapper = feriasMapper;
+        this.registroFeriasRepository = registroFeriasRepository;
+    }
+
+    public FeriasDTO CadastrarFerias(FeriasDTO reg){
         if(reg.getFeriasDatafim().isAfter(reg.getFeriasDataInicio())){
 
-            RegistroFerias ferias = new RegistroFerias();
-            ferias.setFeriasId(reg.getFeriasID());
-            ferias.setColaboradorId(colaboradorRepository.findById(reg.getColaboradorId()).orElseThrow(() -> new NoSuchElementException("Departamento não encontrado com o ID: " + reg.getColaboradorId())));
-            ferias.setFeriasDataFim(reg.getFeriasDatafim());
-            ferias.setFeriasDataInicio(reg.getFeriasDataInicio());
-            ferias.setFeriasDuracaoDias(reg.getFeriasDataInicio().datesUntil(reg.getFeriasDatafim()).count());
-            ferias.setFeriasStatus(reg.getFeriasStatus());
-            return registroFeriasRepository.save(ferias);
+            RegistroFerias ferias = feriasMapper.toEntity(reg);
+            RegistroFerias salvo = registroFeriasRepository.save(ferias);
 
+            FeriasDTO dto = feriasMapper.toDTO(salvo);
+            return dto;
 
         }
         else {
@@ -40,16 +45,26 @@ public class RegistroFeriasService {
         }
     }
 
-    public RegistroFerias BuscarFeriasById (Integer id){
-        return registroFeriasRepository.findById(id)
+    public FeriasDTO BuscarFeriasById (Integer id){
+         RegistroFerias reg = registroFeriasRepository.findById(id)
                 .orElseThrow(() -> new NoSuchElementException("Departamento não encontrado com o ID: " + id));
+            FeriasDTO dto = feriasMapper.toDTO(reg);
+            return dto;
     }
 
     public void DeletarRegistroFeriasById(Integer id){
         registroFeriasRepository.deleteById(id);
     }
 
-    public List<RegistroFerias> ListarRegistros(){
-        return registroFeriasRepository.findAll();
+    public List<FeriasDTO> ListarRegistros(){
+        List<RegistroFerias> listaDeRegistrosFerias = registroFeriasRepository.findAll();
+        return listaDeRegistrosFerias.stream().map(c ->
+        {
+            FeriasDTO feriasDTO = feriasMapper.toDTO(c);
+            return feriasDTO;
+        }).collect(Collectors.toList());
+
     }
+
+
 }

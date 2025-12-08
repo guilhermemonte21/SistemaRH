@@ -8,6 +8,7 @@ import java.util.UUID;
 public class ColaboradorDTO {
     private UUID colaboradorId;
     private String colaboradorNome;
+    private String colaboradorCpf;
     private String colaboradorEmail;
     private Long colaboradorTelefone;
     private Integer departamentoId;
@@ -53,4 +54,11 @@ public class ColaboradorDTO {
         this.departamentoId = departamentoId;
     }
 
+    public String getColaboradorCpf() {
+        return colaboradorCpf;
+    }
+
+    public void setColaboradorCpf(String colaboradorCpf) {
+        this.colaboradorCpf = colaboradorCpf;
+    }
 }

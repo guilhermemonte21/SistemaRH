@@ -1,8 +1,7 @@
 package com.guilherme.AppRH.Service;
 
+import com.guilherme.AppRH.Mappers.ColaboradorMapper;
 import com.guilherme.AppRH.Model.DTO.ColaboradorDTO;
-import com.guilherme.AppRH.Model.DTO.ColaboradorDtoResponse;
-import com.guilherme.AppRH.Model.DTO.DepartamentoDto;
 import com.guilherme.AppRH.Model.Entity.Colaborador;
 import com.guilherme.AppRH.Model.Entity.Departamento;
 import com.guilherme.AppRH.Repository.ColaboradorRepository;
@@ -26,15 +25,10 @@ public class ColaboradorService {
         return colaboradorRepository.save(colaborador);
     }
 
-    public ColaboradorDtoResponse BuscarPorId(UUID id){
+    public ColaboradorDTO BuscarPorId(UUID id){
         Colaborador col = colaboradorRepository.findById(id).orElseThrow(() -> new NoSuchElementException("Departamento não encontrado com o ID: " + id));
-        ColaboradorDtoResponse c = new ColaboradorDtoResponse();
-        c.setColaboradorId(col.getColaboradorId());
-        c.setColaboradorNome(col.getColaboradorNome());
-        c.setColaboradorTelefone(col.getColaboradorTelefone());
-        c.setColaboradorEmail(col.getColaboradorEmail());
-
-        return c;
+        ColaboradorDTO dto = ColaboradorMapper.toDTO(col);
+        return dto;
     }
     public void Atualizar(ColaboradorDTO colaborador, UUID id){
 
