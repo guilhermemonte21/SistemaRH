@@ -48,7 +48,7 @@ public class ColaboradorController {
            return ResponseEntity.ok(colaborador);
 
         } catch (IllegalArgumentException e) {
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, e.getMessage());
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, e.getMessage());
         }
     }
 
@@ -73,7 +73,7 @@ public class ColaboradorController {
             this.service.Deletar(Id );
             return ResponseEntity.ok().build();
         } catch (IllegalArgumentException e) {
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, e.getMessage());
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, e.getMessage());
         }
     }
 }

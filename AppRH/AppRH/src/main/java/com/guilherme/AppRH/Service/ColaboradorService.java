@@ -33,24 +33,19 @@ public class ColaboradorService {
     public void Atualizar(ColaboradorDTO colaborador, UUID id){
 
         Colaborador col = colaboradorRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("Colaborador não encontrado"));
-
-
         col.setColaboradorNome(colaborador.getColaboradorNome());
         col.setColaboradorEmail(colaborador.getColaboradorEmail());
         col.setColaboradorTelefone(colaborador.getColaboradorTelefone());
 
         Departamento DepartamentoById = this.departamentoRepository.findById(colaborador.getDepartamentoId())
                 .orElse(null);
-
-
         col.setDepartamento(DepartamentoById);
 
-
         colaboradorRepository.save(col);
-
     }
 
     public void Deletar(UUID Id){
+        Colaborador colaborador = colaboradorRepository.findById(Id).orElseThrow(() -> new NoSuchElementException("Colaborador não encontrado com o seguinte Id:" + Id));
         colaboradorRepository.deleteById(Id);
     }
 }

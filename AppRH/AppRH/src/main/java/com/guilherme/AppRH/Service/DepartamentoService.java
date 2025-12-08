@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.NoSuchElementException;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -33,8 +34,7 @@ public class DepartamentoService {
 
     public DepartamentoDto BuscarDepartamentoPorId(Integer id){
 
-        Departamento dpto =  departamentoRepository.findById(id)
-                .orElseThrow(() -> new NoSuchElementException("Departamento não encontrado com o ID: " + id));
+        Departamento dpto =  departamentoRepository.findById(id).orElseThrow(() -> new NoSuchElementException("Departamento não encontrado com o ID: " + id));
 
         DepartamentoDto dp = DepartamentoMapper.toDto(dpto);
         return dp;
@@ -42,7 +42,7 @@ public class DepartamentoService {
     }
 
     public void DeletarDepartamento(Integer id){
-
+        Departamento departamento = departamentoRepository.findById(id).orElseThrow(() -> new NoSuchElementException("Departamento não encontrado com o ID: " + id));
         departamentoRepository.deleteById(id);
 
     }

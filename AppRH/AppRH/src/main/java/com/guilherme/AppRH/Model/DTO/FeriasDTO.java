@@ -1,12 +1,14 @@
 package com.guilherme.AppRH.Model.DTO;
 
 import com.guilherme.AppRH.Model.Enum.StatusFerias;
+import org.antlr.v4.runtime.misc.NotNull;
 
 import java.time.LocalDate;
 import java.util.UUID;
 
 public class FeriasDTO {
     private Integer FeriasID;
+
     private UUID ColaboradorId;
     private LocalDate FeriasDataInicio;
     private LocalDate FeriasDatafim;

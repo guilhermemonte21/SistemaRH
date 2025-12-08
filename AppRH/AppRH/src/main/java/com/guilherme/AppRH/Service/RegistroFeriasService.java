@@ -33,8 +33,7 @@ public class RegistroFeriasService {
     public FeriasDTO CadastrarFerias(FeriasDTO reg){
         if(reg.getFeriasDatafim().isAfter(reg.getFeriasDataInicio())){
 
-            RegistroFerias ferias = feriasMapper.toEntity(reg);
-            RegistroFerias salvo = registroFeriasRepository.save(ferias);
+            RegistroFerias salvo = registroFeriasRepository.save(feriasMapper.toEntity(reg));
 
             FeriasDTO dto = feriasMapper.toDTO(salvo);
             return dto;
@@ -48,12 +47,13 @@ public class RegistroFeriasService {
     public FeriasDTO BuscarFeriasById (Integer id){
          RegistroFerias reg = registroFeriasRepository.findById(id)
                 .orElseThrow(() -> new NoSuchElementException("Departamento não encontrado com o ID: " + id));
-            FeriasDTO dto = feriasMapper.toDTO(reg);
-            return dto;
+            FeriasDTO feriasDTO = feriasMapper.toDTO(reg);
+            return feriasDTO;
     }
 
     public void DeletarRegistroFeriasById(Integer id){
-        registroFeriasRepository.deleteById(id);
+        RegistroFerias registroFerias = registroFeriasRepository.findById(id).orElseThrow(() -> new NoSuchElementException("Não existe Registro com o seguinte id:" + id));
+        registroFeriasRepository.delete(registroFerias);
     }
 
     public List<FeriasDTO> ListarRegistros(){
