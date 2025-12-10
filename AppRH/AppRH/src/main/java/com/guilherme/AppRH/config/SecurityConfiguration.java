@@ -2,6 +2,7 @@ package com.guilherme.AppRH.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -24,8 +25,12 @@ public class SecurityConfiguration {
                 .formLogin(Customizer.withDefaults())
                 .httpBasic(Customizer.withDefaults())
                 .authorizeHttpRequests(authorize -> {
-                    authorize.requestMatchers("/colaboradores/**").hasRole("admin");
-                    authorize.requestMatchers("/RegistroFerias").authenticated();
+                    authorize.requestMatchers(HttpMethod.POST,"/colaboradores/**").hasRole("admin");
+                    authorize.requestMatchers(HttpMethod.POST,"/Usuario/**").permitAll();
+                    authorize.requestMatchers(HttpMethod.DELETE,"/colaboradores/**").hasRole("admin");
+                    authorize.requestMatchers(HttpMethod.POST,"/RegistroFerias").authenticated();
+                    authorize.requestMatchers(HttpMethod.DELETE,"/RegistroFerias").authenticated();
+                    authorize.requestMatchers("/login/**").permitAll();
                     authorize.anyRequest().authenticated();
                 } )
                 .build();
@@ -33,6 +38,7 @@ public class SecurityConfiguration {
     @Bean
     public PasswordEncoder passwordEncoder(){
         return new BCryptPasswordEncoder(10);
+
     }
 
     @Bean
@@ -40,9 +46,14 @@ public class SecurityConfiguration {
         UserDetails user1 = User.builder()
                 .username("Guilherme")
                 .password(encoder.encode("1234"))
-                .roles("Admin")
+                .roles("admin")
                 .build();
 
-        return new InMemoryUserDetailsManager(user1);
+        UserDetails user2 = User.builder()
+                .username("Monte")
+                .password(encoder.encode("1234"))
+                .roles("User")
+                .build();
+        return new InMemoryUserDetailsManager(user1, user2);
     }
 }

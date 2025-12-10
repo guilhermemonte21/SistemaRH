@@ -15,19 +15,23 @@ import java.util.UUID;
 public class ColaboradorService {
     private ColaboradorRepository colaboradorRepository;
     private DepartamentoRepository departamentoRepository;
+    private ColaboradorMapper colaboradorMapper;
 
-    public ColaboradorService(ColaboradorRepository colaboradorRepository, DepartamentoRepository departamentoRepository) {
+    public ColaboradorService(ColaboradorRepository colaboradorRepository, DepartamentoRepository departamentoRepository, ColaboradorMapper colaboradorMapper) {
         this.colaboradorRepository = colaboradorRepository;
         this.departamentoRepository = departamentoRepository;
+        this.colaboradorMapper = colaboradorMapper;
     }
 
-    public Colaborador Cadastrar(Colaborador colaborador){
-        return colaboradorRepository.save(colaborador);
+    public ColaboradorDTO Cadastrar(Colaborador colaborador){
+        Colaborador NovoColaborador = colaboradorRepository.save(colaborador);
+        ColaboradorDTO colaboradorDTO = colaboradorMapper.toDTO(NovoColaborador);
+        return colaboradorDTO;
     }
 
     public ColaboradorDTO BuscarPorId(UUID id){
         Colaborador col = colaboradorRepository.findById(id).orElseThrow(() -> new NoSuchElementException("Departamento não encontrado com o ID: " + id));
-        ColaboradorDTO dto = ColaboradorMapper.toDTO(col);
+        ColaboradorDTO dto = colaboradorMapper.toDTO(col);
         return dto;
     }
     public void Atualizar(ColaboradorDTO colaborador, UUID id){

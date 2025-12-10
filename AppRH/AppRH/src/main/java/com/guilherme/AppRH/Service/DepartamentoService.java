@@ -19,11 +19,12 @@ public class DepartamentoService {
 
     @Autowired
     private DepartamentoRepository departamentoRepository;
+    private ColaboradorMapper colaboradorMapper;
 
-    public DepartamentoService(DepartamentoRepository departamentoRepository) {
+    public DepartamentoService(DepartamentoRepository departamentoRepository, ColaboradorMapper colaboradorMapper) {
         this.departamentoRepository = departamentoRepository;
+        this.colaboradorMapper = colaboradorMapper;
     }
-
 
     public Departamento CadastrarDepartamento(String nome){
         Departamento novoDepartamento = new Departamento();
@@ -52,7 +53,7 @@ public class DepartamentoService {
                .orElseThrow(() -> new NoSuchElementException("Departamento não encontrado com o ID: " + ID));
        return dpto.getColaboradorList().stream().map(c ->
        {
-           ColaboradorDTO dto = ColaboradorMapper.toDTO(c);
+           ColaboradorDTO dto = colaboradorMapper.toDTO(c);
            return dto;
        }).collect(Collectors.toList());
 

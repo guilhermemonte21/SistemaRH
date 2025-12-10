@@ -7,13 +7,14 @@ import org.springframework.web.bind.annotation.Mapping;
 
 @Component
 public class ColaboradorMapper {
-    public static ColaboradorDTO toDTO(Colaborador colaborador){
+    public ColaboradorDTO toDTO(Colaborador colaborador){
         ColaboradorDTO colaboradorDTO = new ColaboradorDTO();
         colaboradorDTO.setColaboradorId(colaborador.getColaboradorId());
         colaboradorDTO.setColaboradorNome(colaborador.getColaboradorNome());
         colaboradorDTO.setColaboradorCpf(colaborador.getColaboradorCPF());
         colaboradorDTO.setColaboradorEmail(colaborador.getColaboradorEmail());
         colaboradorDTO.setColaboradorTelefone(colaborador.getColaboradorTelefone());
+        colaboradorDTO.setDepartamentoId(colaborador.getDepartamento().getDepartamentoId());
         return colaboradorDTO;
     }
     public static Colaborador toEntity(ColaboradorDTO colaboradorDTO){

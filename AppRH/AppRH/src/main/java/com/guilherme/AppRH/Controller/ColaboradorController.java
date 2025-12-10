@@ -6,6 +6,7 @@ import com.guilherme.AppRH.Service.ColaboradorService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
@@ -24,12 +25,13 @@ public class ColaboradorController {
 
 
     //funciona
+    @PreAuthorize("admin")
     @PostMapping("/post")
-    public ResponseEntity<Colaborador> salvar(@RequestBody Colaborador col) {
+    public ResponseEntity<ColaboradorDTO> salvar(@RequestBody Colaborador col) {
         try {
             if(col.getColaboradorDataNascimento().datesUntil(LocalDate.now()).count() >= 6575){
-            this.service.Cadastrar(col);
-            return ResponseEntity.status(HttpStatus.CREATED).body(col);
+            ColaboradorDTO novoColaborador = this.service.Cadastrar(col);
+            return ResponseEntity.status(HttpStatus.CREATED).body(novoColaborador);
             }
             else {
 

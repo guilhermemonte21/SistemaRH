@@ -13,7 +13,6 @@ public class Usuario {
     @GeneratedValue(strategy = GenerationType.UUID)
     private UUID IdUsuario;
 
-
     @Column(name = "ColaboradorEmail")
     private String Email;
 
