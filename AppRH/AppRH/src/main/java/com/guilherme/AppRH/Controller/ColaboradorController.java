@@ -3,6 +3,7 @@ package com.guilherme.AppRH.Controller;
 import com.guilherme.AppRH.Model.DTO.ColaboradorDTO;
 import com.guilherme.AppRH.Model.Entity.Colaborador;
 import com.guilherme.AppRH.Service.ColaboradorService;
+import com.guilherme.AppRH.security.securityService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -18,15 +19,14 @@ public class ColaboradorController {
 
     @Autowired
     private ColaboradorService service;
-
     public ColaboradorController(ColaboradorService service) {
         this.service = service;
     }
 
 
     //funciona
-    @PreAuthorize("admin")
     @PostMapping("/post")
+    @PreAuthorize("hasRole('Administrador')")
     public ResponseEntity<ColaboradorDTO> salvar(@RequestBody Colaborador col) {
         try {
             if(col.getColaboradorDataNascimento().datesUntil(LocalDate.now()).count() >= 6575){
@@ -56,6 +56,7 @@ public class ColaboradorController {
 
     //funciona
     @PutMapping("/atualizar/{id}")
+    @PreAuthorize("hasRole('Administrador')")
     public ResponseEntity<Void> atualizar(@RequestBody ColaboradorDTO colaborador, @PathVariable UUID id) {
 
         try {
@@ -70,6 +71,7 @@ public class ColaboradorController {
 
     //funciona
     @DeleteMapping("/delete/{id}")
+    @PreAuthorize("hasRole('Administrador')")
     public ResponseEntity<Void> deletar(@PathVariable("id") UUID Id) {
         try {
             this.service.Deletar(Id );

@@ -7,6 +7,7 @@ import com.guilherme.AppRH.Service.DepartamentoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
@@ -25,6 +26,7 @@ public class DepartamentoController {
 
     //funciona
     @PostMapping
+    @PreAuthorize("hasRole('Administrador')")
     public ResponseEntity<Departamento> cadastrar(@RequestBody Departamento departamento) {
         try {
             Departamento dp = this.service.CadastrarDepartamento(departamento.getDepartamentoNome());
@@ -48,6 +50,7 @@ public class DepartamentoController {
 
     //funciona
     @DeleteMapping("/{id}")
+    @PreAuthorize("hasRole('Administrador')")
     public ResponseEntity<Void> deletar(@PathVariable Integer id) {
         try {
             this.service.DeletarDepartamento(id);

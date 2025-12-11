@@ -14,7 +14,7 @@ public class Usuario {
     private UUID IdUsuario;
 
     @Column(name = "ColaboradorEmail")
-    private String Email;
+    private String email;
 
     @Column(name = "ColaboradorSenha")
     private String Senha;
@@ -31,11 +31,11 @@ public class Usuario {
     }
 
     public String getEmail() {
-        return Email;
+        return email;
     }
 
-    public void setEmail(String email) {
-        Email = email;
+    public void setEmail(String mail) {
+        email = mail;
     }
 
     public String getSenha() {

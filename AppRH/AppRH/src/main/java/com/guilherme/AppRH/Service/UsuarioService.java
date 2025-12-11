@@ -20,4 +20,7 @@ public class UsuarioService {
         user.setSenha(encoder.encode(senha));
         usuarioRepository.save(user);
     }
+    public Usuario GetByEmail(String Email){
+        return usuarioRepository.findByEmail(Email);
+    }
 }
