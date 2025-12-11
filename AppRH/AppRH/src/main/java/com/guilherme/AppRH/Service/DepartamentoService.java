@@ -43,7 +43,6 @@ public class DepartamentoService {
     }
 
     public void DeletarDepartamento(Integer id){
-        Departamento departamento = departamentoRepository.findById(id).orElseThrow(() -> new NoSuchElementException("Departamento não encontrado com o ID: " + id));
         departamentoRepository.deleteById(id);
 
     }

@@ -3,6 +3,7 @@ package com.guilherme.AppRH.Controller;
 import com.guilherme.AppRH.Model.DTO.FeriasDTO;
 import com.guilherme.AppRH.Model.Entity.RegistroFerias;
 import com.guilherme.AppRH.Service.RegistroFeriasService;
+import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -22,10 +23,14 @@ public class RegistroFeriasController {
 
 
     @PostMapping
-    public ResponseEntity<FeriasDTO> cadastrar(@RequestBody FeriasDTO reg) {
+    public ResponseEntity<FeriasDTO> cadastrar(@RequestBody @Valid FeriasDTO reg) {
         try {
+            if(reg.getFeriasDatafim().isAfter(reg.getFeriasDataInicio())){
             FeriasDTO RegistroFerias = this.registroFeriasService.CadastrarFerias(reg);
-            return ResponseEntity.status(HttpStatus.CREATED).body(RegistroFerias);
+            return ResponseEntity.status(HttpStatus.CREATED).body(RegistroFerias);}
+            else{
+                throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "A data final é invalida");
+            }
         } catch (IllegalArgumentException e) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, e.getMessage());
         }

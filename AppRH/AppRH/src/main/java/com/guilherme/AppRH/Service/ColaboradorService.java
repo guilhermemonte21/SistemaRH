@@ -49,7 +49,6 @@ public class ColaboradorService {
     }
 
     public void Deletar(UUID Id){
-        Colaborador colaborador = colaboradorRepository.findById(Id).orElseThrow(() -> new NoSuchElementException("Colaborador não encontrado com o seguinte Id:" + Id));
-        colaboradorRepository.deleteById(Id);
+       colaboradorRepository.deleteById(Id);
     }
 }

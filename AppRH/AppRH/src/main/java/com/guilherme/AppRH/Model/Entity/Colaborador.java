@@ -1,6 +1,7 @@
 package com.guilherme.AppRH.Model.Entity;
 
 import jakarta.persistence.*;
+import org.hibernate.validator.constraints.br.CPF;
 
 import java.time.LocalDate;
 import java.util.UUID;
@@ -17,6 +18,7 @@ public class Colaborador {
     private String ColaboradorNome;
 
     @Column(name = "ColaboradorCpf")
+    @CPF
     private String ColaboradorCPF;
 
     @Column(name = "ColaboradorDataNascimento")

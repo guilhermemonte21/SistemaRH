@@ -10,6 +10,7 @@ import com.guilherme.AppRH.Repository.ColaboradorRepository;
 import com.guilherme.AppRH.Repository.RegistroFeriasRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.client.HttpClientErrorException;
 
 import java.util.List;
 import java.util.NoSuchElementException;
@@ -31,17 +32,15 @@ public class RegistroFeriasService {
     }
 
     public FeriasDTO CadastrarFerias(FeriasDTO reg){
-        if(reg.getFeriasDatafim().isAfter(reg.getFeriasDataInicio())){
+
 
             RegistroFerias salvo = registroFeriasRepository.save(feriasMapper.toEntity(reg));
 
             FeriasDTO dto = feriasMapper.toDTO(salvo);
             return dto;
 
-        }
-        else {
-           return null;
-        }
+
+
     }
 
     public FeriasDTO BuscarFeriasById (Integer id){
@@ -52,8 +51,8 @@ public class RegistroFeriasService {
     }
 
     public void DeletarRegistroFeriasById(Integer id){
-        RegistroFerias registroFerias = registroFeriasRepository.findById(id).orElseThrow(() -> new NoSuchElementException("Não existe Registro com o seguinte id:" + id));
-        registroFeriasRepository.delete(registroFerias);
+
+        registroFeriasRepository.deleteById(id);
     }
 
     public List<FeriasDTO> ListarRegistros(){

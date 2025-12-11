@@ -1,17 +1,24 @@
 package com.guilherme.AppRH.Model.DTO;
 
 import com.guilherme.AppRH.Model.Enum.StatusFerias;
-import org.antlr.v4.runtime.misc.NotNull;
+import jakarta.validation.constraints.FutureOrPresent;
+import jakarta.validation.constraints.NotNull;
 
 import java.time.LocalDate;
 import java.util.UUID;
 
 public class FeriasDTO {
+
     private Integer FeriasID;
 
+    @NotNull
     private UUID ColaboradorId;
+    @NotNull
+    @FutureOrPresent
     private LocalDate FeriasDataInicio;
+    @NotNull
     private LocalDate FeriasDatafim;
+    @NotNull
     private StatusFerias FeriasStatus;
 
     public Integer getFeriasID() {

@@ -4,6 +4,7 @@ import com.guilherme.AppRH.Model.DTO.ColaboradorDTO;
 import com.guilherme.AppRH.Model.Entity.Colaborador;
 import com.guilherme.AppRH.Service.ColaboradorService;
 import com.guilherme.AppRH.security.securityService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -57,7 +58,7 @@ public class ColaboradorController {
     //funciona
     @PutMapping("/atualizar/{id}")
     @PreAuthorize("hasRole('Administrador')")
-    public ResponseEntity<Void> atualizar(@RequestBody ColaboradorDTO colaborador, @PathVariable UUID id) {
+    public ResponseEntity<Void> atualizar(@RequestBody @Valid ColaboradorDTO colaborador, @PathVariable UUID id) {
 
         try {
            service.Atualizar(colaborador, id);
