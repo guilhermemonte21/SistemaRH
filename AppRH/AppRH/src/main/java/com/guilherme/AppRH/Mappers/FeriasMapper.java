@@ -33,6 +33,7 @@ public class FeriasMapper {
         dto.setFeriasDataInicio(reg.getFeriasDataInicio());
         dto.setFeriasDatafim(reg.getFeriasDataFim());
         dto.setFeriasStatus(reg.getFeriasStatus());
+        dto.setFeriasDuracao(reg.getFeriasDataInicio().datesUntil(reg.getFeriasDataFim()).count());
         dto.setColaboradorId(reg.getColaboradorId().getColaboradorId());
         return dto;
     }

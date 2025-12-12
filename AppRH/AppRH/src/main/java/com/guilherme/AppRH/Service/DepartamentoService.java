@@ -26,11 +26,13 @@ public class DepartamentoService {
         this.colaboradorMapper = colaboradorMapper;
     }
 
-    public Departamento CadastrarDepartamento(String nome){
+    public DepartamentoDto CadastrarDepartamento(String nome){
         Departamento novoDepartamento = new Departamento();
         novoDepartamento.setDepartamentoNome(nome);
 
-        return departamentoRepository.save(novoDepartamento);
+        departamentoRepository.save(novoDepartamento);
+
+        return DepartamentoMapper.toDto(novoDepartamento);
     }
 
     public DepartamentoDto BuscarDepartamentoPorId(Integer id){

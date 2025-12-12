@@ -27,9 +27,9 @@ public class DepartamentoController {
     //funciona
     @PostMapping
     @PreAuthorize("hasRole('Administrador')")
-    public ResponseEntity<Departamento> cadastrar(@RequestBody Departamento departamento) {
+    public ResponseEntity<DepartamentoDto> cadastrar(@RequestBody Departamento departamento) {
         try {
-            Departamento dp = this.service.CadastrarDepartamento(departamento.getDepartamentoNome());
+            DepartamentoDto dp = this.service.CadastrarDepartamento(departamento.getDepartamentoNome());
             return ResponseEntity.status(HttpStatus.CREATED).body(dp);
         } catch (IllegalArgumentException e) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, e.getMessage());

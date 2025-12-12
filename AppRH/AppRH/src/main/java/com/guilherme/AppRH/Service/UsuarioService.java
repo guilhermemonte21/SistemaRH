@@ -2,8 +2,10 @@ package com.guilherme.AppRH.Service;
 
 import com.guilherme.AppRH.Model.Entity.Usuario;
 import com.guilherme.AppRH.Repository.UsuarioRepository;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
 
 @Service
 public class UsuarioService {
@@ -16,6 +18,10 @@ public class UsuarioService {
     }
 
     public void CadastrarUsuario(Usuario user){
+        if (GetByEmail(user.getEmail()) != null) {
+            throw new IllegalArgumentException("E-mail já está cadastrado.");
+
+        }
         String senha = user.getSenha();
         user.setSenha(encoder.encode(senha));
         usuarioRepository.save(user);

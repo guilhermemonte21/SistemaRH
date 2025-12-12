@@ -4,6 +4,9 @@ import jakarta.persistence.*;
 import org.hibernate.validator.constraints.br.CPF;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 @Entity
@@ -33,6 +36,10 @@ public class Colaborador {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "departamento_id")
     private Departamento departamento;
+
+
+    @OneToMany(mappedBy = "Colaborador", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<RegistroFerias> ferias = new ArrayList<>();
 
 
     public UUID getColaboradorId() {
@@ -89,5 +96,13 @@ public class Colaborador {
 
     public void setDepartamento(Departamento departamento) {
         this.departamento = departamento;
+    }
+
+    public List<RegistroFerias> getFerias() {
+        return ferias;
+    }
+
+    public void setFerias(List<RegistroFerias> ferias) {
+        this.ferias = ferias;
     }
 }

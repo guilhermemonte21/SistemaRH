@@ -2,7 +2,11 @@ package com.guilherme.AppRH.Controller;
 
 import com.guilherme.AppRH.Model.Entity.Usuario;
 import com.guilherme.AppRH.Service.UsuarioService;
+import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.server.ResponseStatusException;
 
 @RestController
 @RequestMapping("/usuario")
@@ -14,8 +18,14 @@ public class UsuarioController {
     }
 
     @PostMapping
-    public void Salvar(@RequestBody Usuario user){
-        service.CadastrarUsuario(user);
+    public ResponseEntity<Void> Salvar(@RequestBody Usuario user){
+        try {
+
+            service.CadastrarUsuario(user);
+            return ResponseEntity.status(HttpStatus.CREATED).build();
+        } catch (IllegalArgumentException e) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, e.getMessage());
+        }
     }
 
     @GetMapping("/{email}")

@@ -18,6 +18,8 @@ public class FeriasDTO {
     private LocalDate FeriasDataInicio;
     @NotNull
     private LocalDate FeriasDatafim;
+
+    private Long FeriasDuracao;
     @NotNull
     private StatusFerias FeriasStatus;
 
@@ -59,5 +61,13 @@ public class FeriasDTO {
 
     public void setFeriasStatus(StatusFerias feriasStatus) {
         FeriasStatus = feriasStatus;
+    }
+
+    public Long getFeriasDuracao() {
+        return FeriasDuracao;
+    }
+
+    public void setFeriasDuracao(Long feriasDuracao) {
+        FeriasDuracao = feriasDuracao;
     }
 }

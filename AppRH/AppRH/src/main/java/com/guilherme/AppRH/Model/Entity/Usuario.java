@@ -2,6 +2,7 @@ package com.guilherme.AppRH.Model.Entity;
 
 import com.guilherme.AppRH.Model.Enum.TipoUsuario;
 import jakarta.persistence.*;
+import org.hibernate.validator.constraints.UniqueElements;
 
 import java.util.UUID;
 

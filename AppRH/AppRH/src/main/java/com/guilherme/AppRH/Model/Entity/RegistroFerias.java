@@ -14,7 +14,7 @@ public class RegistroFerias {
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private Integer FeriasId;
 
-    @OneToOne
+    @ManyToOne
     @JoinColumn(name = "Colaborador")
     private Colaborador Colaborador;
 
