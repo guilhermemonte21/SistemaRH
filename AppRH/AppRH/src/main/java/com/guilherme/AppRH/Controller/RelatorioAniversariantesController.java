@@ -14,7 +14,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/aniversariantes")
 public class RelatorioAniversariantesController {
-    private RelatorioAniversarioService service;
+    private final RelatorioAniversarioService service;
 
     public RelatorioAniversariantesController(RelatorioAniversarioService service) {
         this.service = service;

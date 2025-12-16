@@ -2,12 +2,16 @@ package com.guilherme.AppRH.Model.Entity;
 
 import com.guilherme.AppRH.Model.Enum.TipoUsuario;
 import jakarta.persistence.*;
+import lombok.Getter;
+import lombok.Setter;
 import org.hibernate.validator.constraints.UniqueElements;
 
 import java.util.UUID;
 
 @Entity
 @Table(name = "usuarios")
+@Getter
+@Setter
 public class Usuario {
     @Id
     @Column(name = "UsuarioId")
@@ -23,35 +27,4 @@ public class Usuario {
     @Column(name = "TipoUsuario")
     private TipoUsuario Role;
 
-    public UUID getIdUsuario() {
-        return IdUsuario;
-    }
-
-    public void setIdUsuario(UUID idUsuario) {
-        IdUsuario = idUsuario;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String mail) {
-        email = mail;
-    }
-
-    public String getSenha() {
-        return Senha;
-    }
-
-    public void setSenha(String senha) {
-        Senha = senha;
-    }
-
-    public TipoUsuario getRole() {
-        return Role;
-    }
-
-    public void setRole(TipoUsuario role) {
-        Role = role;
-    }
 }

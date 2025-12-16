@@ -1,6 +1,8 @@
 package com.guilherme.AppRH.Model.Entity;
 
 import jakarta.persistence.*;
+import lombok.Getter;
+import lombok.Setter;
 import org.hibernate.validator.constraints.br.CPF;
 
 import java.time.LocalDate;
@@ -11,6 +13,8 @@ import java.util.UUID;
 
 @Entity
 @Table(name = "colaborador")
+@Getter
+@Setter
 public class Colaborador {
     @Id
     @Column(name = "ColaboradorId")
@@ -42,67 +46,4 @@ public class Colaborador {
     private List<RegistroFerias> ferias = new ArrayList<>();
 
 
-    public UUID getColaboradorId() {
-        return ColaboradorId;
-    }
-
-    public void setColaboradorId(UUID colaboradorId) {
-        ColaboradorId = colaboradorId;
-    }
-
-    public String getColaboradorNome() {
-        return ColaboradorNome;
-    }
-
-    public void setColaboradorNome(String colaboradorNome) {
-        ColaboradorNome = colaboradorNome;
-    }
-
-    public String getColaboradorCPF() {
-        return ColaboradorCPF;
-    }
-
-    public void setColaboradorCPF(String colaboradorCPF) {
-        ColaboradorCPF = colaboradorCPF;
-    }
-
-    public LocalDate getColaboradorDataNascimento() {
-        return ColaboradorDataNascimento;
-    }
-
-    public void setColaboradorDataNascimento(LocalDate colaboradorDataNascimento) {
-        ColaboradorDataNascimento = colaboradorDataNascimento;
-    }
-
-    public String getColaboradorEmail() {
-        return ColaboradorEmail;
-    }
-
-    public void setColaboradorEmail(String colaboradorEmail) {
-        ColaboradorEmail = colaboradorEmail;
-    }
-
-    public Long getColaboradorTelefone() {
-        return ColaboradorTelefone;
-    }
-
-    public void setColaboradorTelefone(Long colaboradorTelefone) {
-        ColaboradorTelefone = colaboradorTelefone;
-    }
-
-    public Departamento getDepartamento() {
-        return departamento;
-    }
-
-    public void setDepartamento(Departamento departamento) {
-        this.departamento = departamento;
-    }
-
-    public List<RegistroFerias> getFerias() {
-        return ferias;
-    }
-
-    public void setFerias(List<RegistroFerias> ferias) {
-        this.ferias = ferias;
-    }
 }

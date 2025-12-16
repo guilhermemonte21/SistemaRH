@@ -21,9 +21,9 @@ import java.util.stream.Collectors;
 public class RegistroFeriasService {
 
 
-    private RegistroFeriasRepository registroFeriasRepository;
+    private final RegistroFeriasRepository registroFeriasRepository;
 
-    private  FeriasMapper feriasMapper;
+    private  final FeriasMapper feriasMapper;
 
 
     public RegistroFeriasService(FeriasMapper feriasMapper, RegistroFeriasRepository registroFeriasRepository ) {

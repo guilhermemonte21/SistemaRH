@@ -9,8 +9,8 @@ import org.springframework.web.server.ResponseStatusException;
 
 @Service
 public class UsuarioService {
-    private UsuarioRepository usuarioRepository;
-    private PasswordEncoder encoder;
+    private final UsuarioRepository usuarioRepository;
+    private final PasswordEncoder encoder;
 
     public UsuarioService(UsuarioRepository usuarioRepository, PasswordEncoder encoder) {
         this.usuarioRepository = usuarioRepository;

@@ -20,7 +20,7 @@ public class FeriasMapper {
     public RegistroFerias toEntity(FeriasDTO reg){
         RegistroFerias ferias = new RegistroFerias();
         ferias.setFeriasId(reg.getFeriasID());
-        ferias.setColaboradorId(colaboradorRepository.findById(reg.getColaboradorId()).orElseThrow(() -> new NoSuchElementException("Registro não encontrado com o ID: " + reg.getColaboradorId())));
+        ferias.setColaborador(colaboradorRepository.findById(reg.getColaboradorId()).orElseThrow(() -> new NoSuchElementException("Registro não encontrado com o ID: " + reg.getColaboradorId())));
         ferias.setFeriasDataFim(reg.getFeriasDatafim());
         ferias.setFeriasDataInicio(reg.getFeriasDataInicio());
         ferias.setFeriasDuracaoDias(reg.getFeriasDataInicio().datesUntil(reg.getFeriasDatafim()).count());
@@ -34,7 +34,7 @@ public class FeriasMapper {
         dto.setFeriasDatafim(reg.getFeriasDataFim());
         dto.setFeriasStatus(reg.getFeriasStatus());
         dto.setFeriasDuracao(reg.getFeriasDataInicio().datesUntil(reg.getFeriasDataFim()).count());
-        dto.setColaboradorId(reg.getColaboradorId().getColaboradorId());
+        dto.setColaboradorId(reg.getColaborador().getColaboradorId());
         return dto;
     }
 }

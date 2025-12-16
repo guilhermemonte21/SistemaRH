@@ -2,9 +2,12 @@ package com.guilherme.AppRH.Controller;
 
 import com.guilherme.AppRH.Model.DTO.ColaboradorDTO;
 import com.guilherme.AppRH.Model.Entity.Colaborador;
+import com.guilherme.AppRH.Repository.ColaboradorRepository;
 import com.guilherme.AppRH.Service.ColaboradorService;
 import com.guilherme.AppRH.security.securityService;
 import jakarta.validation.Valid;
+import lombok.NoArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -13,24 +16,29 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.time.LocalDate;
+import java.util.Optional;
 import java.util.UUID;
 @RestController
 @RequestMapping("/colaboradores")
+@Slf4j
+
 public class ColaboradorController {
 
-    @Autowired
-    private ColaboradorService service;
-    public ColaboradorController(ColaboradorService service) {
+    private final ColaboradorRepository repository;
+    private final ColaboradorService service;
+
+    public ColaboradorController(ColaboradorRepository repository, ColaboradorService service) {
+        this.repository = repository;
         this.service = service;
     }
-
 
     //funciona
     @PostMapping("/post")
     @PreAuthorize("hasRole('Administrador')")
-    public ResponseEntity<ColaboradorDTO> salvar(@RequestBody Colaborador col) {
+    public ResponseEntity<ColaboradorDTO> salvar(@RequestBody ColaboradorDTO col) {
         try {
-            if(col.getColaboradorDataNascimento().datesUntil(LocalDate.now()).count() >= 6575){
+            log.info("Cadastrando Colaborador {}",col.getColaboradorNome());
+            if(col.getDataNascimento().datesUntil(LocalDate.now()).count() >= 6575){
             ColaboradorDTO novoColaborador = this.service.Cadastrar(col);
             return ResponseEntity.status(HttpStatus.CREATED).body(novoColaborador);
             }
@@ -74,12 +82,15 @@ public class ColaboradorController {
     @DeleteMapping("/delete/{id}")
     @PreAuthorize("hasRole('Administrador')")
     public ResponseEntity<Void> deletar(@PathVariable("id") UUID Id) {
-        try {
-            this.service.Deletar(Id );
-            return ResponseEntity.ok().build();
-        } catch (IllegalArgumentException e) {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, e.getMessage());
-        }
+        log.info("Deletando autor de ID: {} ", Id);
+            Optional<Colaborador> colaborador = repository.findById(Id);
+            if(colaborador.isEmpty()){
+                return ResponseEntity.notFound().build();
+            }
+            else {
+                this.service.Deletar(Id);
+                return ResponseEntity.noContent().build();
+            }
     }
 }
 

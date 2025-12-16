@@ -12,8 +12,8 @@ import java.util.stream.Collectors;
 
 @Service
 public class RelatorioAniversarioService {
-    private ColaboradorRepository colaboradorRepository;
-    private ColaboradorMapper mapper;
+    private final ColaboradorRepository colaboradorRepository;
+    private final ColaboradorMapper mapper;
 
     public RelatorioAniversarioService(ColaboradorRepository colaboradorRepository, ColaboradorMapper mapper) {
         this.colaboradorRepository = colaboradorRepository;

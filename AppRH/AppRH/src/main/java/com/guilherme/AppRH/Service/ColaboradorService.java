@@ -13,9 +13,9 @@ import java.util.UUID;
 
 @Service
 public class ColaboradorService {
-    private ColaboradorRepository colaboradorRepository;
-    private DepartamentoRepository departamentoRepository;
-    private ColaboradorMapper colaboradorMapper;
+    private final ColaboradorRepository colaboradorRepository;
+    private final DepartamentoRepository departamentoRepository;
+    private final ColaboradorMapper colaboradorMapper;
 
     public ColaboradorService(ColaboradorRepository colaboradorRepository, DepartamentoRepository departamentoRepository, ColaboradorMapper colaboradorMapper) {
         this.colaboradorRepository = colaboradorRepository;
@@ -23,10 +23,12 @@ public class ColaboradorService {
         this.colaboradorMapper = colaboradorMapper;
     }
 
-    public ColaboradorDTO Cadastrar(Colaborador colaborador){
-        Colaborador NovoColaborador = colaboradorRepository.save(colaborador);
-        ColaboradorDTO colaboradorDTO = colaboradorMapper.toDTO(NovoColaborador);
-        return colaboradorDTO;
+    public ColaboradorDTO Cadastrar(ColaboradorDTO colaboradorDTO){
+
+        Colaborador NovoColaborador = colaboradorMapper.toEntity(colaboradorDTO);
+        Colaborador colaboradorCriado = this.colaboradorRepository.save(NovoColaborador);
+        ColaboradorDTO dtoResponse = colaboradorMapper.toDTO(colaboradorCriado);
+        return dtoResponse;
     }
 
     public ColaboradorDTO BuscarPorId(UUID id){

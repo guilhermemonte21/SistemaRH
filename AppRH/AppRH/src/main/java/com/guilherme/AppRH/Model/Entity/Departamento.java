@@ -1,6 +1,8 @@
 package com.guilherme.AppRH.Model.Entity;
 
 import jakarta.persistence.*;
+import lombok.Getter;
+import lombok.Setter;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -8,6 +10,8 @@ import java.util.UUID;
 
 @Entity
 @Table(name = "departamento")
+@Getter
+@Setter
 public class Departamento {
     @Id
     @Column(name = "departamentoId")
@@ -21,27 +25,4 @@ public class Departamento {
     @OneToMany(mappedBy = "departamento", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<Colaborador> colaboradorList = new ArrayList<Colaborador>();
 
-    public Integer getDepartamentoId() {
-        return DepartamentoId;
-    }
-
-    public void setDepartamentoId(Integer departamentoId) {
-        DepartamentoId = departamentoId;
-    }
-
-    public String getDepartamentoNome() {
-        return DepartamentoNome;
-    }
-
-    public void setDepartamentoNome(String departamentoNome) {
-        DepartamentoNome = departamentoNome;
-    }
-
-    public List<Colaborador> getColaboradorList() {
-        return colaboradorList;
-    }
-
-    public void setColaboradorList(List<Colaborador> colaboradorList) {
-        this.colaboradorList = colaboradorList;
-    }
 }

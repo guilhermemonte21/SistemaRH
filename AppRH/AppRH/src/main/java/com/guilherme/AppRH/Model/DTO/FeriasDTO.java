@@ -3,10 +3,14 @@ package com.guilherme.AppRH.Model.DTO;
 import com.guilherme.AppRH.Model.Enum.StatusFerias;
 import jakarta.validation.constraints.FutureOrPresent;
 import jakarta.validation.constraints.NotNull;
+import lombok.Getter;
+import lombok.Setter;
 
 import java.time.LocalDate;
 import java.util.UUID;
 
+@Getter
+@Setter
 public class FeriasDTO {
 
     private Integer FeriasID;
@@ -23,51 +27,5 @@ public class FeriasDTO {
     @NotNull
     private StatusFerias FeriasStatus;
 
-    public Integer getFeriasID() {
-        return FeriasID;
-    }
 
-    public void setFeriasID(Integer feriasID) {
-        FeriasID = feriasID;
-    }
-
-    public UUID getColaboradorId() {
-        return ColaboradorId;
-    }
-
-    public void setColaboradorId(UUID colaboradorId) {
-        ColaboradorId = colaboradorId;
-    }
-
-    public LocalDate getFeriasDataInicio() {
-        return FeriasDataInicio;
-    }
-
-    public void setFeriasDataInicio(LocalDate feriasDataInicio) {
-        FeriasDataInicio = feriasDataInicio;
-    }
-
-    public LocalDate getFeriasDatafim() {
-        return FeriasDatafim;
-    }
-
-    public void setFeriasDatafim(LocalDate feriasDatafim) {
-        FeriasDatafim = feriasDatafim;
-    }
-
-    public StatusFerias getFeriasStatus() {
-        return FeriasStatus;
-    }
-
-    public void setFeriasStatus(StatusFerias feriasStatus) {
-        FeriasStatus = feriasStatus;
-    }
-
-    public Long getFeriasDuracao() {
-        return FeriasDuracao;
-    }
-
-    public void setFeriasDuracao(Long feriasDuracao) {
-        FeriasDuracao = feriasDuracao;
-    }
 }
