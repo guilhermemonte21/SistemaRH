@@ -5,6 +5,7 @@ import com.guilherme.AppRH.Model.Entity.Colaborador;
 import com.guilherme.AppRH.Repository.ColaboradorRepository;
 import com.guilherme.AppRH.Service.ColaboradorService;
 import com.guilherme.AppRH.security.securityService;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.NoArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -21,7 +22,7 @@ import java.util.UUID;
 @RestController
 @RequestMapping("/colaboradores")
 @Slf4j
-
+@Tag(name = "Colaborador")
 public class ColaboradorController {
 
     private final ColaboradorRepository repository;

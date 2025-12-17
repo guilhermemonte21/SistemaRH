@@ -4,6 +4,8 @@ import com.guilherme.AppRH.Model.DTO.ColaboradorDTO;
 import com.guilherme.AppRH.Model.DTO.DepartamentoDto;
 import com.guilherme.AppRH.Model.Entity.Departamento;
 import com.guilherme.AppRH.Service.DepartamentoService;
+import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -15,6 +17,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/departamentos")
+@Tag(name = "Departamento")
 public class DepartamentoController {
 
 
@@ -27,9 +30,9 @@ public class DepartamentoController {
     //funciona
     @PostMapping
     @PreAuthorize("hasRole('Administrador')")
-    public ResponseEntity<DepartamentoDto> cadastrar(@RequestBody Departamento departamento) {
+    public ResponseEntity<DepartamentoDto> cadastrar(@RequestBody @Valid DepartamentoDto departamento) {
         try {
-            DepartamentoDto dp = this.service.CadastrarDepartamento(departamento.getDepartamentoNome());
+            DepartamentoDto dp = this.service.CadastrarDepartamento(departamento);
             return ResponseEntity.status(HttpStatus.CREATED).body(dp);
         } catch (IllegalArgumentException e) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, e.getMessage());

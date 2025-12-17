@@ -20,26 +20,27 @@ public class DepartamentoService {
 
     private final DepartamentoRepository departamentoRepository;
     private final ColaboradorMapper colaboradorMapper;
+    private final DepartamentoMapper departamentoMapper;
 
-    public DepartamentoService(DepartamentoRepository departamentoRepository, ColaboradorMapper colaboradorMapper) {
+    public DepartamentoService(DepartamentoRepository departamentoRepository, ColaboradorMapper colaboradorMapper, DepartamentoMapper dp) {
         this.departamentoRepository = departamentoRepository;
         this.colaboradorMapper = colaboradorMapper;
+        this.departamentoMapper = dp;
     }
 
-    public DepartamentoDto CadastrarDepartamento(String nome){
-        Departamento novoDepartamento = new Departamento();
-        novoDepartamento.setDepartamentoNome(nome);
+    public DepartamentoDto CadastrarDepartamento(DepartamentoDto departamentoDto){
+        Departamento novoDepartamento = departamentoMapper.toEntity(departamentoDto);
 
-        departamentoRepository.save(novoDepartamento);
+        Departamento DepartamentoCadastrado = departamentoRepository.save(novoDepartamento);
 
-        return DepartamentoMapper.toDto(novoDepartamento);
+        return departamentoMapper.toDto(DepartamentoCadastrado);
     }
 
     public DepartamentoDto BuscarDepartamentoPorId(Integer id){
 
         Departamento dpto =  departamentoRepository.findById(id).orElseThrow(() -> new NoSuchElementException("Departamento não encontrado com o ID: " + id));
 
-        DepartamentoDto dp = DepartamentoMapper.toDto(dpto);
+        DepartamentoDto dp = departamentoMapper.toDto(dpto);
         return dp;
 
     }

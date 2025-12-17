@@ -3,6 +3,7 @@ package com.guilherme.AppRH.Controller;
 import com.guilherme.AppRH.Model.DTO.FeriasDTO;
 import com.guilherme.AppRH.Model.Entity.RegistroFerias;
 import com.guilherme.AppRH.Service.RegistroFeriasService;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -13,6 +14,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/ferias")
+@Tag(name = "Registro Férias")
 public class RegistroFeriasController {
 
     private final RegistroFeriasService registroFeriasService;

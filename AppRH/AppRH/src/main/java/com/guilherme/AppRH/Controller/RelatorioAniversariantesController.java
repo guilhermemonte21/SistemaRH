@@ -3,6 +3,7 @@ package com.guilherme.AppRH.Controller;
 
 import com.guilherme.AppRH.Model.DTO.ColaboradorDTO;
 import com.guilherme.AppRH.Service.RelatorioAniversarioService;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -13,6 +14,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/aniversariantes")
+@Tag(name = "Relatorio Aniversariantes")
 public class RelatorioAniversariantesController {
     private final RelatorioAniversarioService service;
 

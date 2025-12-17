@@ -9,7 +9,6 @@ import lombok.Setter;
 @Setter
 public class DepartamentoDto {
 
-    @NotNull
     private Integer Id;
 
     @NotBlank(message = "Nome do Departamento é Obrigatorio")
