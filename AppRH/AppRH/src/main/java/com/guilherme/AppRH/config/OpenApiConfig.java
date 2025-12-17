@@ -21,7 +21,7 @@ import org.springframework.context.annotation.Configuration;
                         url = "RH.com"
                 )
         ),
-        security ={
+        security = {
             @SecurityRequirement(name = "bearerAuth")
         }
 )

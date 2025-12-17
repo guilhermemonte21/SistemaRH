@@ -9,6 +9,7 @@ import com.guilherme.AppRH.Repository.DepartamentoRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.NoSuchElementException;
+import java.util.Optional;
 import java.util.UUID;
 
 @Service
@@ -31,10 +32,9 @@ public class ColaboradorService {
         return dtoResponse;
     }
 
-    public ColaboradorDTO BuscarPorId(UUID id){
-        Colaborador col = colaboradorRepository.findById(id).orElseThrow(() -> new NoSuchElementException("Departamento não encontrado com o ID: " + id));
-        ColaboradorDTO dto = colaboradorMapper.toDTO(col);
-        return dto;
+    public Optional<ColaboradorDTO> BuscarPorId(UUID id){
+        Optional<ColaboradorDTO> col = colaboradorRepository.findById(id).map(colaboradorMapper::toDTO);
+        return col;
     }
     public void Atualizar(ColaboradorDTO colaborador, UUID id){
 

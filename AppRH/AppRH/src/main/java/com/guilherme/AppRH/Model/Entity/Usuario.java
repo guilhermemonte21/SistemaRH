@@ -25,6 +25,7 @@ public class Usuario {
     private String Senha;
 
     @Column(name = "TipoUsuario")
+    @Enumerated(EnumType.STRING)
     private TipoUsuario Role;
 
 }

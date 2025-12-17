@@ -1,5 +1,6 @@
 package com.guilherme.AppRH.Controller;
 
+import com.guilherme.AppRH.Mappers.ColaboradorMapper;
 import com.guilherme.AppRH.Model.DTO.ColaboradorDTO;
 import com.guilherme.AppRH.Model.Entity.Colaborador;
 import com.guilherme.AppRH.Repository.ColaboradorRepository;
@@ -27,13 +28,15 @@ public class ColaboradorController {
 
     private final ColaboradorRepository repository;
     private final ColaboradorService service;
+    private final ColaboradorMapper mapper;
 
-    public ColaboradorController(ColaboradorRepository repository, ColaboradorService service) {
+    public ColaboradorController(ColaboradorRepository repository, ColaboradorService service, ColaboradorMapper mapper) {
         this.repository = repository;
         this.service = service;
+        this.mapper = mapper;
     }
 
-    //funciona
+
     @PostMapping("/post")
     @PreAuthorize("hasRole('Administrador')")
     public ResponseEntity<ColaboradorDTO> salvar(@RequestBody ColaboradorDTO col) {
@@ -52,34 +55,37 @@ public class ColaboradorController {
         }
     }
 
-    //funciona
-    @GetMapping("/{id}")
-    public ResponseEntity<ColaboradorDTO> buscarPorId(@PathVariable("id") UUID id) {
-        try {
-           ColaboradorDTO colaborador = service.BuscarPorId(id);
-           return ResponseEntity.ok(colaborador);
 
-        } catch (IllegalArgumentException e) {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, e.getMessage());
-        }
+    @GetMapping("/{id}")
+    public ResponseEntity<Optional<ColaboradorDTO>> buscarPorId(@PathVariable("id") UUID id) {
+
+            Optional<ColaboradorDTO> ColaboradorBuscado = service.BuscarPorId(id);
+           if(ColaboradorBuscado.isEmpty()){
+               return ResponseEntity.notFound().build();
+           }
+           else{
+               return ResponseEntity.ok(ColaboradorBuscado);
+           }
+
     }
 
-    //funciona
+
     @PutMapping("/atualizar/{id}")
     @PreAuthorize("hasRole('Administrador')")
     public ResponseEntity<Void> atualizar(@RequestBody @Valid ColaboradorDTO colaborador, @PathVariable UUID id) {
-
-        try {
-           service.Atualizar(colaborador, id);
-           return ResponseEntity.status(HttpStatus.OK).build();
-
-        } catch (IllegalArgumentException e) {
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, e.getMessage());
+            Optional<Colaborador> colaboradorOptional = service.BuscarPorId(id).map(mapper::toEntity);
+        if(colaboradorOptional.isPresent()) {
+            service.Atualizar(colaborador, id);
+            return ResponseEntity.ok().build();
         }
+        else{
+            return ResponseEntity.notFound().build();
+        }
+
     }
 
 
-    //funciona
+
     @DeleteMapping("/delete/{id}")
     @PreAuthorize("hasRole('Administrador')")
     public ResponseEntity<Void> deletar(@PathVariable("id") UUID Id) {

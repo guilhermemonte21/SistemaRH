@@ -24,7 +24,12 @@ public class RelatorioAniversariantesController {
 
     @GetMapping("/{mes}")
     public ResponseEntity<List<ColaboradorDTO>> ListaAniversariantes(@PathVariable("mes") int mes){
-        List<ColaboradorDTO> aniversariantes = service.ListaAniversariantes(mes);
-        return ResponseEntity.ok().body(aniversariantes);
+        if(mes > 0 && mes <=12) {
+            List<ColaboradorDTO> aniversariantes = service.ListaAniversariantes(mes);
+            return ResponseEntity.ok().body(aniversariantes);
+        }
+        else {
+            return ResponseEntity.unprocessableEntity().build();
+        }
     }
 }

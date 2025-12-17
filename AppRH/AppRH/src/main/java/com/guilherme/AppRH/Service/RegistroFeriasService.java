@@ -6,6 +6,7 @@ import com.guilherme.AppRH.Model.DTO.ColaboradorDTO;
 import com.guilherme.AppRH.Model.DTO.FeriasDTO;
 import com.guilherme.AppRH.Model.Entity.Colaborador;
 import com.guilherme.AppRH.Model.Entity.RegistroFerias;
+import com.guilherme.AppRH.Model.Enum.StatusFerias;
 import com.guilherme.AppRH.Repository.ColaboradorRepository;
 import com.guilherme.AppRH.Repository.RegistroFeriasRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,6 +15,7 @@ import org.springframework.web.client.HttpClientErrorException;
 
 import java.util.List;
 import java.util.NoSuchElementException;
+import java.util.Optional;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
@@ -43,11 +45,12 @@ public class RegistroFeriasService {
 
     }
 
-    public FeriasDTO BuscarFeriasById (Integer id){
-         RegistroFerias reg = registroFeriasRepository.findById(id)
-                .orElseThrow(() -> new NoSuchElementException("Departamento não encontrado com o ID: " + id));
-            FeriasDTO feriasDTO = feriasMapper.toDTO(reg);
-            return feriasDTO;
+    public Optional<FeriasDTO> BuscarFeriasById (Integer id){
+         Optional<FeriasDTO> reg = registroFeriasRepository.findById(id).map(feriasMapper::toDTO);
+
+
+
+            return reg;
     }
 
     public void DeletarRegistroFeriasById(Integer id){
@@ -65,5 +68,10 @@ public class RegistroFeriasService {
 
     }
 
+    public void atualizar(Integer id, StatusFerias statusFerias){
+        Optional<RegistroFerias> Ferias = registroFeriasRepository.findById(id);
+        Ferias.get().setFeriasStatus(statusFerias);
+        registroFeriasRepository.save(Ferias.get());
+    }
 
 }

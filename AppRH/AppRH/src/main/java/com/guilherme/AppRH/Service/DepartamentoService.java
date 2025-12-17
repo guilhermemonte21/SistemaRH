@@ -36,12 +36,12 @@ public class DepartamentoService {
         return departamentoMapper.toDto(DepartamentoCadastrado);
     }
 
-    public DepartamentoDto BuscarDepartamentoPorId(Integer id){
+    public Optional<DepartamentoDto> BuscarDepartamentoPorId(Integer id){
 
-        Departamento dpto =  departamentoRepository.findById(id).orElseThrow(() -> new NoSuchElementException("Departamento não encontrado com o ID: " + id));
+        Optional<DepartamentoDto> dpto =  departamentoRepository.findById(id).map(departamentoMapper::toDto);
 
-        DepartamentoDto dp = departamentoMapper.toDto(dpto);
-        return dp;
+
+        return dpto;
 
     }
 

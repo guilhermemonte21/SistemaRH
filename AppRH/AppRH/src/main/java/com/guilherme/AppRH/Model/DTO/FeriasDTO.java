@@ -1,6 +1,8 @@
 package com.guilherme.AppRH.Model.DTO;
 
 import com.guilherme.AppRH.Model.Enum.StatusFerias;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.validation.constraints.FutureOrPresent;
 import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
@@ -24,8 +26,9 @@ public class FeriasDTO {
     private LocalDate FeriasDatafim;
 
     private Long FeriasDuracao;
-    @NotNull
-    private StatusFerias FeriasStatus;
+    @Enumerated(EnumType.STRING)
+
+    private StatusFerias FeriasStatus = StatusFerias.PendenteDeAprovacao;
 
 
 }
