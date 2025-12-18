@@ -8,7 +8,6 @@ import com.guilherme.AppRH.Repository.ColaboradorRepository;
 import com.guilherme.AppRH.Repository.DepartamentoRepository;
 import org.springframework.stereotype.Service;
 
-import java.util.NoSuchElementException;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -17,11 +16,13 @@ public class ColaboradorService {
     private final ColaboradorRepository colaboradorRepository;
     private final DepartamentoRepository departamentoRepository;
     private final ColaboradorMapper colaboradorMapper;
+    private final EmailService emailSender;
 
-    public ColaboradorService(ColaboradorRepository colaboradorRepository, DepartamentoRepository departamentoRepository, ColaboradorMapper colaboradorMapper) {
+    public ColaboradorService(ColaboradorRepository colaboradorRepository, DepartamentoRepository departamentoRepository, ColaboradorMapper colaboradorMapper, EmailService emailSender) {
         this.colaboradorRepository = colaboradorRepository;
         this.departamentoRepository = departamentoRepository;
         this.colaboradorMapper = colaboradorMapper;
+        this.emailSender = emailSender;
     }
 
     public ColaboradorDTO Cadastrar(ColaboradorDTO colaboradorDTO){
@@ -29,6 +30,7 @@ public class ColaboradorService {
         Colaborador NovoColaborador = colaboradorMapper.toEntity(colaboradorDTO);
         Colaborador colaboradorCriado = this.colaboradorRepository.save(NovoColaborador);
         ColaboradorDTO dtoResponse = colaboradorMapper.toDTO(colaboradorCriado);
+        emailSender.enviarEmailSimples(colaboradorCriado.getColaboradorEmail(),"Seja Bem-Vindo a empresa", "Seja Bem-vindo a nossa empresa "+ colaboradorCriado.getColaboradorNome());
         return dtoResponse;
     }
 

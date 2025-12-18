@@ -9,6 +9,7 @@ import jakarta.validation.Valid;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
@@ -35,7 +36,7 @@ public class RegistroFeriasController {
             FeriasDTO RegistroFerias = this.registroFeriasService.CadastrarFerias(reg);
             return ResponseEntity.status(HttpStatus.CREATED).body(RegistroFerias);}
             else{
-                throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "A data final é invalida");
+                throw new ResponseStatusException(HttpStatus.UNPROCESSABLE_ENTITY, "A data final é invalida");
             }
         } catch (IllegalArgumentException e) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, e.getMessage());
@@ -76,14 +77,16 @@ public class RegistroFeriasController {
     }
 
     @PutMapping("/{id}")
+    @PreAuthorize("hasRole('Administrador')")
     public ResponseEntity<Void> Atualizar(@PathVariable("id") Integer id, StatusFerias status){
         Optional<FeriasDTO> registroFerias = registroFeriasService.BuscarFeriasById(id);
         if(registroFerias.isEmpty()) {
             return ResponseEntity.notFound().build();
         }
         else {
-            registroFeriasService.atualizar(id, status);
-            return ResponseEntity.ok().build();
+
+                registroFeriasService.atualizar(id, status);
+                return ResponseEntity.ok().build();
         }
         }
 

@@ -7,7 +7,9 @@ import jakarta.validation.constraints.NotBlank;
 import lombok.Getter;
 import lombok.Setter;
 import org.antlr.v4.runtime.misc.NotNull;
+import org.hibernate.validator.constraints.br.CNPJ;
 import org.hibernate.validator.constraints.br.CPF;
+import org.springframework.http.HttpStatus;
 
 import java.time.LocalDate;
 import java.util.UUID;
@@ -24,12 +26,12 @@ public class ColaboradorDTO {
     @NotBlank(message = "CPF é obrigatorio")
     private String colaboradorCpf;
 
-    @Email
+    @Email(regexp = "^[a-zA-Z0-9._%+-]+@gmail\\.com$")
     @NotBlank(message = "Email Obrigatório")
     private String colaboradorEmail;
 
     @NotNull
-    @Digits(integer = 11, fraction = 0)
+
     private Long colaboradorTelefone;
 
     @NotNull

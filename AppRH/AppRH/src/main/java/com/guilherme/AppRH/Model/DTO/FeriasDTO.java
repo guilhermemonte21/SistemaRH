@@ -22,6 +22,7 @@ public class FeriasDTO {
     @NotNull
     @FutureOrPresent
     private LocalDate FeriasDataInicio;
+
     @NotNull
     private LocalDate FeriasDatafim;
 

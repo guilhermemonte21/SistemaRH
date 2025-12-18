@@ -35,6 +35,7 @@ public class SecurityConfiguration {
                     authorize.requestMatchers(HttpMethod.POST,"/usuario/**").permitAll();
                     authorize.requestMatchers("/login/**").permitAll();
                     authorize.requestMatchers("/error/**").permitAll();
+                    authorize.requestMatchers("/h2-console/**").permitAll();
                     authorize.anyRequest().authenticated();
 
                 } )
@@ -49,7 +50,8 @@ public class SecurityConfiguration {
                 "/swagger-ui.html",
                 "/swagger-ui/**",
                 "/webjars/**",
-               "*/actuator/**"
+               "*/actuator/**",
+                "*/h2-console/**"
         );
     }
     @Bean

@@ -39,7 +39,7 @@ public class ColaboradorController {
 
     @PostMapping("/post")
     @PreAuthorize("hasRole('Administrador')")
-    public ResponseEntity<ColaboradorDTO> salvar(@RequestBody ColaboradorDTO col) {
+    public ResponseEntity<ColaboradorDTO> salvar(@Valid @RequestBody ColaboradorDTO col) {
         try {
             log.info("Cadastrando Colaborador {}",col.getColaboradorNome());
             if(col.getDataNascimento().datesUntil(LocalDate.now()).count() >= 6575){
@@ -48,7 +48,7 @@ public class ColaboradorController {
             }
             else {
 
-                return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
+                return ResponseEntity.status(HttpStatus.UNPROCESSABLE_ENTITY).build();
             }
         } catch (IllegalArgumentException e) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, e.getMessage());
